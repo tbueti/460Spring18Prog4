@@ -1,0 +1,56 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Proj4: New Student</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<t1>
+	First name: <input id="fname" type="text" name="fname">
+	<br>
+	Last name: <input id="lname" type="text" name="lname">
+	<br>
+	Address: <input id="addr" type="text" name="addr">
+	<br>
+	Phone: <input id="phone" type="text" name="phone">
+	<br>
+	Email: <input id="email" type="text" name="email">
+	<br>
+	Gender: <input id="gender" type="text" name="gender">
+	<br>
+	DOB (MM/DD/YYYY): <input id="dob" type="text" name="dob">
+	<br>
+	Major: <input id="major" type="text" name="major">
+	<br>
+	Minor: <input id="minor" type="text" name="minor">
+	<br>
+	<INPUT Type="BUTTON" Value="back" Onclick="window.location.href='index.html'"> <button type="submit" onClick= "newStudent()">submit</button>
+	
+    </t1>
+</form>
+<script type="text/javascript">
+	function newStudent(){
+        var fname = document.getElementById('fname').value;
+        console.log(fname);
+        var lname = document.getElementById('lname').value;
+        var addr = document.getElementById('addr').value;
+        var phone = document.getElementById('phone').value;
+        var email = document.getElementById('email').value;
+        var gender = document.getElementById('gender').value;
+        var dob = document.getElementById('dob').value;
+        var major = document.getElementById('major').value;
+        var minor = document.getElementById('minor').value;
+
+        window.location.href = "/student?fname=" + fname
+        + "&lname="+lname
+        + "&addr="+addr
+        + "&phone="+phone
+        + "&email="+email
+        + "&gender="+gender
+        + "&dob="+dob
+        + "&major="+major
+       + "&minor="+minor;
+	}
+</script>
+</body>
+</html>
