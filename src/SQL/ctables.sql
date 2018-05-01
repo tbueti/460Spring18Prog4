@@ -23,7 +23,7 @@ CREATE TABLE Advisor (
 	last_name varchar2(20) not null,
 	dob varchar2(10) not null,
 	gender varchar2(1) not null,
-	job_title varchar2(20) not null,
+	job_title varchar2(30) not null,
 	location numeric(10) not null
  );
  
@@ -39,19 +39,19 @@ CREATE TABLE Advisor (
 	category varchar2(20) not null,
 	major varchar2(30) not null,
 	minor varchar2(30),
-	advisor_id numeric(10) references Advisor (advisor_id) not null
+	advisor_id numeric(10) not null
  );
  
  CREATE TABLE Lease(
 	lease_id numeric(10) PRIMARY KEY not null,
-	res_apt_id numeric(10) references ResHall(hall_id) not null,
-	room_no numeric(5) references Room(room_no) not null,
-	student_id numeric(10) references Student(student_id) not null,
+	res_apt_id numeric(10) not null,
+	room_no numeric(5) not null,
+	student_id numeric(10) not null,
 	rate numeric(10) not null,
 	start_date varchar2(10) not null,
-	duartion varchar2(10) not null
-	first_name varchar2(20) references Student(first_name) not null,
-	last_name varchar2(20) references Student(last_name) not null,
+	duartion varchar2(10) not null,
+	first_name varchar2(20) not null,
+	last_name varchar2(20) not null
  );
  
  CREATE TABLE ResHall (
@@ -62,26 +62,26 @@ CREATE TABLE Advisor (
  );
  
  CREATE TABLE Room(
-	res_apt_id numeric(10) references ResHall(hall_id) PRIMARY KEY not null,
-	room_no numeric(5) PRIMARY KEY not null,
-	rate numeric(10) not null
+	res_apt_id numeric(10) not null,
+	room_no numeric(5) not null,
+	rate numeric(10) not null,
+	CONSTRAINT pk_room PRIMARY KEY (res_apt_id, room_no)
  );
  
  CREATE TABLE Invoice (
 	invoice_id numeric(10) PRIMARY KEY not null,
-	lease_id numeric(10) references Lease(lease_id),
-	semester varchar2(10) not null,
+	lease_id numeric(10),
+	semester numeric(10) not null,
 	due_date varchar2(10) not null,
-	paid_date varchar2(10) not null
+	paid_date varchar2(10)
  );
  
  CREATE TABLE Inspection(
 	inspection_id numeric(10) PRIMARY KEY not null,
-	res_apt_no numeric(10) references ResHall(hall_id),
-	room_no numeric(10) references Room(room_no),
-	staff_id numeric(10) references Staff(staff_id),
-	date varchar2(10),
+	res_apt_no numeric(10),
+	room_no numeric(10),
+	staff_id numeric(10),
+	inspection_date varchar2(10),
 	condition varchar2(20),
 	action_taken varchar2(50)
-	
  );

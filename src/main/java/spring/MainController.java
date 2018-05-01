@@ -205,8 +205,9 @@ public class MainController {
 //associated with the Invoice (including Residence Hall if necessary), and the amounts due. In addition,
 //calculate the total outstanding debt of all unpaid invoices.
 
-//runs the query and then checks if the unpaid invoices
-//were outstanding before adding it to the result list
+//Runs the query and then checks if the unpaid invoices
+//were outstanding before adding it to the result list.
+//Result list is then displayed.
 
 @GetMapping("/invoices")
 public String invoices(Model model){
@@ -244,6 +245,32 @@ public String invoices(Model model){
 	 model.addAttribute("invoices", unpaidInvoices);
 
 	 return "invoices";
+}
+
+//Query 4 (Custom Query 1): Of all of the students who live on-campus (in a Residence Hall),
+//print the students full name as well as their advisors full name and email address.
+
+@GetMapping("/advisors")
+public String advisors(Model model){
+
+   //STEP 1: STEP UP QUERY AND VARIABLES
+   String sql =   "SELECT s.first_name, s.last_name, a.first_name, a.last_name, a.email FROM Student s, Advisor a WHERE s.advisor_id = a.advisor_id AND EXISTS(SELECT l.lease_id FROM Lease l, ResHall h WHERE l.student_id = s.student_id AND l.res_apt_id = h.hall_id)";
+
+   //STEP 2: EXCECUTE QUERY AND STORE RESULTS
+   List<StudentAdvisor> advisorList = jdbcTemplate.query(sql, new RowMapper<StudentAdvisor>(){
+   public StudentAdvisor mapRow(ResultSet rs, int rowNum) 
+   throws SQLException {
+      StudentAdvisor ls = new StudentAdvisor(rs.getString(1), 
+                                             rs.getString(2),
+                                             rs.getString(3),
+                                             rs.getString(4),
+                                             rs.getString(5));
+         return ls;
+      }
+   });
+   model.addAttribute("advisors", advisorList);
+
+   return "advisors";
 }
 
     @GetMapping("/dStudent")
