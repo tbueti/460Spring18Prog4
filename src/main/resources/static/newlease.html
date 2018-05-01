@@ -1,7 +1,7 @@
 <!DOCTYPE HTML>
 <html>
 <head>
-    <title>Proj4: New Staff</title>
+    <title>Proj4: New Lease</title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
@@ -14,7 +14,13 @@
 	<br>
 	Room ID: <input id="rid" type="text" name="rid">
 	<br>
+    ResHall/AptID: <input id="rapid" type="text" name="rapid">
+    <br>
 	Rate: <input id="rate" type="text" name="rate">
+    <br>
+    Start Date: <input id="sd" type="text" name="sd">
+    <br>
+    Duration: <input id="duration" type="text" name="duration">
 	<br>
 	<INPUT Type="BUTTON" Value="back" Onclick="window.location.href='index.html'"> <button type="submit" onClick= "newLease()">submit</button>
 	
@@ -26,12 +32,18 @@
         var lname = document.getElementById('lname').value;
         var sid = document.getElementById('sid').value;
         var rid = document.getElementById('rid').value;
+        var rapid = document.getElementById('rapid').value;
         var rate = document.getElementById('rate').value;
+        var sd = document.getElementById('sd').value;
+        var duration = document.getElementById('duration').value;
         window.location.href = "/nlease?fname=" + fname
         + "&lname="+lname
         + "&sid="+sid
         + "&rid="+rid
-        + "&rate="+rate;
+        + "&rapid="+rapid
+        + "&rate="+rate
+        + "&sDate="+sd
+        + "&duration="+duration;
 	}
 </script>
 </body>

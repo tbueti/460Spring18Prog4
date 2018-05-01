@@ -20,7 +20,7 @@
 	<br>
 	Update rent <INPUT Type="BUTTON" Value="select" Onclick="window.location.href='updateRent.html'">
 	<br>
-	Delete Student <button type="submit">Delete</button>
+	Delete Student (Student ID)<input id="sid" type="text" name="sid"><button type="submit" onClick="deleteStudent()">Delete</button>
 	<br>
   Display Advisors <button type="submit" onclick="getAdvisors()">Show Advisors</button>
   <br>
@@ -34,6 +34,10 @@
     }
     function getLeases(){
         window.location.href = "/leases";
+    }
+    function deleteStudent(){
+        var sid = document.getElementById("sid").value;
+        window.location.href = "/dStudent?sid="+sid;
     }
   function getInvoices() {
     window.location.href = "/unpaidInvoices";

@@ -6,9 +6,11 @@
 </head>
 <body>
 	<t1>
-	ResApt ID: <input id="id" type="text" name="id">
+	ResApt ID: <input id="resId" type="text" name="resId">
 	<br>
-	New Rent: <input id="newRent" type="text" name="newRent">
+    Room Number <input id="roNum" type="text" name="roNum">
+    <br>
+	New Rent: <input id="nRent" type="text" name="nRent">
 	<br>
 	<INPUT Type="BUTTON" Value="back" Onclick="window.location.href='index.html'"> <button type="submit" onClick= "updateRent()">submit</button>
 	
@@ -16,10 +18,12 @@
 </form>
 <script type="text/javascript">
 	function updateRent(){
-        var id = document.getElementById('id').value;
-        var newRent = document.getElementById('newRent').value;
-        window.location.href = "/uRent?resaptid=" + id
-        + "&newRent="+newRent;
+        var resId = document.getElementById('resId').value;
+        var nRent = document.getElementById('nRent').value;
+        var roNum = document.getElementById('roNum').value;
+        window.location.href = "/uRent?resaptid=" + resId
+        +"&roNum="+roNum
+        +"&nRent="+nRent;
 	}
 </script>
 </body>
