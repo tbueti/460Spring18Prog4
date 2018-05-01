@@ -193,7 +193,7 @@ public class MainController {
 				summaries.add(new LeaseCount("Postgraduate", pgRHCount, pgFACount));
 
 				// Change the DOM
-        model.addAttribute("lease", summaries);
+        model.addAttribute("leases", summaries);
         return "leases";
     }
 
