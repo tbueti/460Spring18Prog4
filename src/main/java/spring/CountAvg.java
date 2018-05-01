@@ -17,7 +17,7 @@ public class CountAvg {
 
    // Class members
    public double count;
-   public double avg
+   public double avg;
 
    // Constructor
    public CountAvg(double c, double a) {
@@ -25,7 +25,7 @@ public class CountAvg {
       try {
          this.count = c;
          this.avg = a;
-         
+
       } catch (Exception e) {
 
       }
