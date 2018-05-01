@@ -273,7 +273,7 @@ public String advisors(Model model){
 }
 
 
-  
+
 //Query 5(Custom Query 2): Given the name of a ResHall, display the number of students who
 //reside there and the average price of rent at that ResHall.
 
@@ -288,8 +288,8 @@ public String reshalls(Model model){
    List<CountAvg> calculations = jdbcTemplate.query(sql, new RowMapper<CountAvg>(){
       public CountAvg mapRow(ResultSet rs, int rowNum)
       throws SQLException {
-            CountAvg ls = new CountAvg(rs.getDouble(1),
-                                       rs.getDouble(2));
+            CountAvg ls = new CountAvg(rs.getString(1),
+                                       rs.getString(2));
             return ls;
       }
    });
@@ -297,7 +297,7 @@ public String reshalls(Model model){
 
    return "reshalls";
 }
-   
+
     //Record Deletion(Student): deletes a student who matches the given id given by the user from the student table and any leases that are associated with the student
 
     @GetMapping("/dStudent")
@@ -325,7 +325,7 @@ public String reshalls(Model model){
                           @RequestParam(name="major", required=true) String major,
                           @RequestParam(name="minor", required=false) String minor)
     {
-        
+
         String sql = "select MAX(student_id) from student";
 		int sid = jdbcTemplate.queryForObject(sql, Integer.class) +1;
 		System.out.println("new sid = " + sid);
@@ -403,7 +403,7 @@ public String reshalls(Model model){
 
         return "complete";
     }
-    
+
     //Record Update(Room): updates the rate in the specified room. Does not change existing leases
     @GetMapping("/uRent")
     public String updateRent(
@@ -411,8 +411,8 @@ public String reshalls(Model model){
                         @RequestParam(name="roNum", required=true) String roNum,
                         @RequestParam(name="nRent", required=true) String nRent)
     {
-        
-        
+
+
         System.out.println("resaptid = " + resaptid);
         System.out.println("room_no = " + roNum);
         System.out.println("newRent = " + nRent);
