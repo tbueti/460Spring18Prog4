@@ -253,7 +253,7 @@ public String invoices(Model model){
 public String advisors(Model model){
 
    //STEP 1: STEP UP QUERY AND VARIABLES
-   String sql =   "SELECT Student.first_name, Student.last_name, Advisor.first_name, Advisor.last_name, Advisor.email FROM Student, Advisor WHERE Student.advisor_id = Advisor.advisor_id";
+   String sql =   "SELECT Student.first_name, Student.last_name, Advisor.first_name, Advisor.last_name, Advisor.email FROM Student, Advisor WHERE Student.advisor_id = Advisor.advisor_id AND EXISTS(SELECT l.lease_id FROM Lease l, ResHall h WHERE l.student_id = s.student_id AND l.res_apt_id = h.hall_id)";
 
    //STEP 2: EXCECUTE QUERY AND STORE RESULTS
    List<StudentAdvisor> advisorList = jdbcTemplate.query(sql, new RowMapper<StudentAdvisor>(){
@@ -270,6 +270,30 @@ public String advisors(Model model){
    model.addAttribute("advisors", advisorList);
 
    return "advisors";
+}
+
+//Query 5(Custom Query 2): Given the name of a ResHall, display the number of students who
+//reside there and the average price of rent at that ResHall.
+
+@GetMapping("/reshalls")
+public String reshalls(Model model){
+   String input = 'Mohave';
+
+   //STEP 1: STEP UP QUERY AND VARIABLES
+   String sql = "SELECT count(student_id), avg(rate) FROM Lease l, ResHall h WHERE l.res_apt_id = h.hall_id AND h.name = '" + input + "'";
+
+   //STEP 2: EXCECUTE QUERY AND STORE RESULTS
+   List<CountAvg> calculations = jdbcTemplate.query(sql, new RowMapper<CountAvg>(){
+      public CountAvg mapRow(ResultSet rs, int rowNum) 
+      throws SQLException {
+            CountAvg ls = new CountAvg(rs.getString(1), 
+                                       rs.getString(2));
+            return ls;
+      }
+   });
+   model.addAttribute("reshalls", calculations);
+
+   return "reshalls";
 }
 
     @GetMapping("/dStudent")
