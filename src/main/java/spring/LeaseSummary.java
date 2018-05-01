@@ -44,7 +44,7 @@ public class LeaseSummary {
 	// duration and today's date.
 	public boolean isActive() {
 
-		SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+		try {SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
 
 		// Get the current date
 		Date today = new Date();
@@ -68,6 +68,9 @@ public class LeaseSummary {
 
 		// The lease is up
 		return false;
+	} catch (Exception e) {
+		return false;
+	}
 	}
 
 
