@@ -22,6 +22,8 @@
 	<br>
     Category: <input id="cat" type="text" name="cat">
     <br>
+	Advisor: <input id="advisor" type="text" name="advisor">
+	<br>
 	Major: <input id="major" type="text" name="major">
 	<br>
 	Minor: <input id="minor" type="text" name="minor">
@@ -40,6 +42,7 @@
         var gender = document.getElementById('gender').value;
         var dob = document.getElementById('dob').value;
         var cat = document.getElementById('cat').value;
+        var advisor = document.getElementById('advisor').value;
         var major = document.getElementById('major').value;
         var minor = document.getElementById('minor').value;
 
@@ -51,6 +54,7 @@
         + "&gender="+gender
         + "&dob="+dob
         + "&cat="+cat
+        + "&advisor="+advisor
         + "&major="+major
        + "&minor="+minor;
 	}

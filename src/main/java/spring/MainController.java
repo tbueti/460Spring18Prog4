@@ -77,6 +77,8 @@ public class MainController {
                           @RequestParam(name="email", required=true) String email,
                           @RequestParam(name="gender", required=true) String gender,
                           @RequestParam(name="dob", required=true) String dob,
+                          @RequestParam(name="cat", required=true) String cat,
+                          @RequestParam(name="advisor", required=true) String advisor,
                           @RequestParam(name="major", required=true) String major,
                           @RequestParam(name="minor", required=false) String minor)
     {
@@ -87,8 +89,18 @@ public class MainController {
         System.out.println("email = " + email);
         System.out.println("gender = " + gender);
         System.out.println("dob = " + dob);
+        System.out.println("cat = " + cat);
+        System.out.println("advisor = " + advisor);
         System.out.println("major = " + major);
         System.out.println("minor = " + minor);
+		
+		String sql = "select MAX(student_id) from student";
+		int sid = jdbcTemplate.queryForObject(sql, Integer.class) +1;
+		System.out.println("new sid = " + sid);
+		jdbcTemplate.update(
+			"INSERT INTO Student (student_id, First_name, Last_name, Address, Phone, Email,Gender, DOB, Category, Major, Minor, advisor_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)",
+			sid,fname,lname,addr,phone,email,gender,dob,cat,major,minor,advisor
+		);
         return "complete";
     }
 
@@ -99,7 +111,6 @@ public class MainController {
                           @RequestParam(name="lname", required=true) String lname,
                           @RequestParam(name="gender", required=true) String gender,
                           @RequestParam(name="dob", required=true) String dob,
-                          @RequestParam(name="cat", required=true) String cat,
                           @RequestParam(name="title", required=true) String title,
                           @RequestParam(name="location", required=true) String location)
     {
@@ -107,7 +118,6 @@ public class MainController {
         System.out.println("lname = " + lname);
         System.out.println("gender = " + gender);
         System.out.println("dob = " + dob);
-        System.out.println("cat = " + cat);
         System.out.println("title = " + title);
         System.out.println("location = " + location);
         return "complete";
