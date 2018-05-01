@@ -29,7 +29,7 @@ public class LeaseSummary {
 
 		try {
 
-			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+			SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
 			this.startDate = sdf.parse(sd);
 			this.duration = Integer.parseInt(dur);
 		} catch (Exception e) {

@@ -34,7 +34,7 @@ public class LeaseNameInfo {
          this.hallId = hid;
          this.roomNo = rno;
          this.rate = r;
-         SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+         SimpleDateFormat df = new SimpleDateFormat("MM/dd/yyyy");
          this.dueDate = df.parse(dd);
       } catch (Exception e) {
 
