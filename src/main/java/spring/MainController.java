@@ -253,13 +253,13 @@ public String invoices(Model model){
 public String advisors(Model model){
 
    //STEP 1: STEP UP QUERY AND VARIABLES
-   String sql =   "SELECT s.first_name, s.last_name, a.first_name, a.last_name, a.email FROM Student s, Advisor a WHERE s.advisor_id = a.advisor_id AND EXISTS(SELECT l.lease_id FROM Lease l, ResHall h WHERE l.student_id = s.student_id AND l.res_apt_id = h.hall_id)";
+   String sql =   "SELECT s.first_name, s.last_name, a.first_name, a.last_name, a.email FROM Student s, Advisor, Lease a WHERE s.advisor_id = a.advisor_id and Lease.student_id = s.student_id and Lease.res_apt_id in (select res_apt_id from ResHall)";
 
    //STEP 2: EXCECUTE QUERY AND STORE RESULTS
    List<StudentAdvisor> advisorList = jdbcTemplate.query(sql, new RowMapper<StudentAdvisor>(){
-   public StudentAdvisor mapRow(ResultSet rs, int rowNum) 
+   public StudentAdvisor mapRow(ResultSet rs, int rowNum)
    throws SQLException {
-      StudentAdvisor ls = new StudentAdvisor(rs.getString(1), 
+      StudentAdvisor ls = new StudentAdvisor(rs.getString(1),
                                              rs.getString(2),
                                              rs.getString(3),
                                              rs.getString(4),
@@ -332,8 +332,8 @@ public String advisors(Model model){
         System.out.println("dob = " + dob);
         System.out.println("title = " + title);
         System.out.println("location = " + location);
-        
-        
+
+
         String sql = "select MAX(staff_id) from staff";
         int sid = jdbcTemplate.queryForObject(sql, Integer.class) +1;
         int loc = Integer.parseInt(location);
@@ -343,7 +343,7 @@ public String advisors(Model model){
                             sid,fname,lname,gender,dob, title, location
                             );
 
-        
+
         return "complete";
     }
 
@@ -363,7 +363,7 @@ public String advisors(Model model){
         System.out.println("sid = " + sid);
         System.out.println("rid = " + rid);
         System.out.println("rate = " + rate);
-        
+
         String sql = "select MAX(lease_id) from lease";
         int lid = jdbcTemplate.queryForObject(sql, Integer.class) +1;
         int sidInt = Integer.parseInt(sid);
@@ -376,9 +376,9 @@ public String advisors(Model model){
                             "INSERT INTO Lease(lease_id, res_apt_id, room_no, student_id, rate, start_date, duartion, first_name, last_name) VALUES (?,?,?,?,?,?,?,?,?)",
                             lid,rapidInt,ridInt,sidInt,rate, sDate,durationInt,fname,lname
                             );
-        
-        
-        
+
+
+
         return "complete";
     }
 
