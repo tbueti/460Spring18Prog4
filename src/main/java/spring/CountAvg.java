@@ -20,11 +20,11 @@ public class CountAvg {
    public double avg;
 
    // Constructor
-   public CountAvg(double c, double a) {
+   public CountAvg(String c, String a) {
 
       try {
-         this.count = c;
-         this.avg = a;
+         this.count = Double.parseDouble(c);
+         this.avg = Double.parseDouble(a);
 
       } catch (Exception e) {
 
