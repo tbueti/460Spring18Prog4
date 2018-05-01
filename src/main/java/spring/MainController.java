@@ -236,9 +236,9 @@ public String invoices(Model model){
 				 }
 
 				 return null;
+			} catch (Exception e) {
+				return null;
 			}
-		} catch (Exception e) {
-			return null;
 		}
 	 });
 	 model.addAttribute("invoices", unpaidInvoices);
