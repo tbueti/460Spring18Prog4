@@ -279,16 +279,16 @@ public String advisors(Model model){
 
 @GetMapping("/reshalls")
 public String reshalls(Model model){
-   String input = 'Mohave';
+   String input = "Mohave";
 
    //STEP 1: STEP UP QUERY AND VARIABLES
    String sql = "SELECT count(student_id), avg(rate) FROM Lease l, ResHall h WHERE l.res_apt_id = h.hall_id AND h.name = '" + input + "'";
 
    //STEP 2: EXCECUTE QUERY AND STORE RESULTS
    List<CountAvg> calculations = jdbcTemplate.query(sql, new RowMapper<CountAvg>(){
-      public CountAvg mapRow(ResultSet rs, int rowNum) 
+      public CountAvg mapRow(ResultSet rs, int rowNum)
       throws SQLException {
-            CountAvg ls = new CountAvg(rs.getString(1), 
+            CountAvg ls = new CountAvg(rs.getString(1),
                                        rs.getString(2));
             return ls;
       }
