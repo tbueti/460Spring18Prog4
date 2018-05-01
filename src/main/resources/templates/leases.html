@@ -1,10 +1,15 @@
 <!DOCTYPE HTML>
 <html>
     <head>
-        <title>Proj4: Managers List</title>
+        <title>Proj4: Leases</title>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     </head>
     <body>
-        <p th:text="'This is a test ' + ${sampleText}"/>
+        <table>
+            <tr th:each="lease : ${leases}">
+                <td th:text="${lease.fname}"</td>
+                  <td th:text="${lease.lname}"</td>
+            </tr>
+        </table>
     </body>
 </html>

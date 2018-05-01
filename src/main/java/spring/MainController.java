@@ -27,31 +27,32 @@ public class MainController {
         jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
-
-    @GetMapping("/greeting")
-    public String greeting(@RequestParam(name="name", required=false, defaultValue="World") String name, Model model) {
-        model.addAttribute("name", name);
-        String sql = "insert into aakashrathore.people values (?)";
-        jdbcTemplate.update(sql, name);
-        return "greeting";
-    }
-    
     @GetMapping("/managers")
     public String managers(@RequestParam(name="name", required=false, defaultValue="World") String sampleText, Model model){
+				String sql = "SELECT First_Name, Last_Name, Phone FROM deriand.Staff, deriand.Hotel";
+				List<ManagerHall> results = jdbcTemplate.query(sql, new RowM)
         model.addAttribute("sampleText", sampleText);//sets up sampleText variable for managers.html
         System.out.println("\n\n\ntest\n\n\n");
         System.out.println(sampleText);
         return "managers";
     }
-    
+
     @GetMapping("/leases")
     public String managers(Model model){
         model.addAttribute("sampleText", "wow");//sets up sampleText variable for leases.html
+        model.addAttribute("sampleText", "such wow\nhello");
         System.out.println("\n\n\ntest\n\n\n");
         return "leases";
     }
 
-    
+    @GetMapping("/dStudent")
+    public String deleteStudent( @RequestParam(name="sid", required=true) String sid)
+    {
+        System.out.println("sid = " + sid);
+        return "complete";
+    }
+
+
     @GetMapping("/student")
     public String student(
                           @RequestParam(name="fname", required=true) String fname,
@@ -62,7 +63,8 @@ public class MainController {
                           @RequestParam(name="gender", required=true) String gender,
                           @RequestParam(name="dob", required=true) String dob,
                           @RequestParam(name="major", required=true) String major,
-                          @RequestParam(name="minor", required=true) String minor){
+                          @RequestParam(name="minor", required=false) String minor)
+    {
         System.out.println("fname = " + fname);
         System.out.println("lname = " + lname);
         System.out.println("addr = " + addr);
@@ -74,6 +76,53 @@ public class MainController {
         System.out.println("minor = " + minor);
         return "complete";
     }
+
+
+    @GetMapping("/staff")
+    public String staff(
+                          @RequestParam(name="fname", required=true) String fname,
+                          @RequestParam(name="lname", required=true) String lname,
+                          @RequestParam(name="gender", required=true) String gender,
+                          @RequestParam(name="dob", required=true) String dob,
+                          @RequestParam(name="cat", required=true) String cat,
+                          @RequestParam(name="title", required=true) String title,
+                          @RequestParam(name="location", required=true) String location)
+    {
+        System.out.println("fname = " + fname);
+        System.out.println("lname = " + lname);
+        System.out.println("gender = " + gender);
+        System.out.println("dob = " + dob);
+        System.out.println("cat = " + cat);
+        System.out.println("title = " + title);
+        System.out.println("location = " + location);
+        return "complete";
+    }
+
+    @GetMapping("/nlease")
+    public String staff(
+                        @RequestParam(name="fname", required=true) String fname,
+                        @RequestParam(name="lname", required=true) String lname,
+                        @RequestParam(name="sid", required=true) String sid,
+                        @RequestParam(name="rid", required=true) String rid,
+                        @RequestParam(name="rate", required=true) String rate)
+    {
+        System.out.println("fname = " + fname);
+        System.out.println("lname = " + lname);
+        System.out.println("sid = " + sid);
+        System.out.println("rid = " + rid);
+        System.out.println("rate = " + rate);
+        return "complete";
+    }
+
+    @GetMapping("/uRent")
+    public String staff(
+                        @RequestParam(name="resaptid", required=true) String resaptid,
+                        @RequestParam(name="newRent", required=true) String newRent)
+    {
+        System.out.println("resaptid = " + resaptid);
+        System.out.println("newRent = " + newRent);
+        return "complete";
+    }
+
+
 }
-
-

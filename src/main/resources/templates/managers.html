@@ -1,10 +1,21 @@
 <!DOCTYPE HTML>
 <html>
-    <head>
-        <title>Proj4: Managers List</title>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    </head>
-    <body>
-        <p th:text="'This is a test ' + ${sampleText}"/>
-    </body>
+  <head>
+    <title>Proj4: Managers and Phone Numbers</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  </head>
+  <body>
+    <table>
+      <tr>
+        <td>First Name</td>
+        <td>Last Name</td>
+        <td>Phone</td>
+      </tr>
+      <tr th:each="manager : ${managers}">
+        <td th:"${manager.firstName}"</td>
+        <td th:"${manager.lastName}"</td>
+        <td th:"${manager.phone}"</td>
+      </tr>
+    </table>
+  </body>
 </html>
