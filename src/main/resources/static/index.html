@@ -37,6 +37,10 @@
     }
     function deleteStudent(){
         var sid = document.getElementById("sid").value;
+        if(sid.length == 0) {
+          alert("Please specify which student is to be deleted!");
+          return;
+        }
         window.location.href = "/dStudent?sid="+sid;
     }
   function getInvoices() {
@@ -46,6 +50,10 @@
     window.location.href = "/advisors";
   }
   function getResHallStats() {
+    if (document.getElementById("input").value.length == 0) {
+      alert("Please specify which student is to be deleted!");
+      return;
+    }
     window.location.href = "/reshalls?hallName=" + document.getElementById("input").value;
   }
 </script>
