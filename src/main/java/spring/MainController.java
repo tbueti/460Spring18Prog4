@@ -28,19 +28,29 @@ public class MainController {
         jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
+		// Responds to request made to the
+		// controller for answering query
+		// 1: What are the manager names and
+		// telephone numbers of each Residence Hall?
+		// Collects the query results into a list of
+		// strings that represent each row
     @GetMapping("/managers")
-    public String managers(@RequestParam(name="name", required=false, defaultValue="World") String sampleText, Model model){
-		String sql = "Select first_name,last_name, phone from staff join resHall on staff.Location = ResHall.hall_id";
-		List<String> rows = jdbcTemplate.query(sql, new RowMapper<String>(){
-                    public String mapRow(ResultSet rs, int rowNum)
-                                                    throws SQLException {
-						String res = rs.getString(1) + "\t" + rs.getString(2) + "\t" + rs.getString(3);
-                        return res;
-                        }
-                    });
-		model.addAttribute("managers", rows);
+    public String managers(@RequestParam(name="name", required=false, defaultValue="World") String sampleText, Model model)
+		{
+			// Vars
+			String sql = "Select first_name,last_name, phone from staff join resHall on staff.Location = ResHall.hall_id";	// Form the query
+			List<String> rows = jdbcTemplate.query(sql, new RowMapper<String>() {																						// Collect all rows
+      	public String mapRow(ResultSet rs, int rowNum) throws SQLException {																					// Specify how to store the resulting tuples in the list of strings
+				String res = rs.getString(1) + " " + rs.getString(2) + " " + rs.getString(3);																// Format the string
+        	return res;																																																	// Return the string
+        }
+      });
 
-        return "managers";
+			// Add the concatenated string to change the DOM
+			model.addAttribute("managers", rows);
+
+			// Return
+      return "managers";
     }
 
     @GetMapping("/leases")
