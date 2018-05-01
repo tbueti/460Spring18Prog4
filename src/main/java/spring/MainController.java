@@ -16,6 +16,10 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Calendar;
+import java.text.SimpleDateFormat;
+import java.text.DateFormat;
 
 @Controller
 public class MainController {
@@ -196,6 +200,77 @@ public class MainController {
         model.addAttribute("leases", summaries);
         return "leases";
     }
+
+		//Query 3: List the names of students with outstanding unpaid invoices, identifying information for the Room/Apartment
+//associated with the Invoice (including Residence Hall if necessary), and the amounts due. In addition,
+//calculate the total outstanding debt of all unpaid invoices.
+
+//Runs the query and then checks if the unpaid invoices
+//were outstanding before adding it to the result list.
+//Result list is then displayed.
+
+@GetMapping("/unpaidInvoices")
+public String invoices(Model model){
+
+	 //STEP 1: STEP UP QUERY AND VARIABLES
+	 double totalDebt = 0;
+	 int i = 0;
+	 String sql =   "SELECT first_name, last_name, res_apt_id, room_no, rate, due_date FROM Lease l, Invoice i WHERE l.lease_id = i.lease_id AND i.paid_date IS NULL";
+
+	 //STEP 2: EXCECUTE QUERY AND STORE RESULTS
+	 List<LeaseNameInfo> unpaidInvoices = jdbcTemplate.query(sql, new RowMapper<LeaseNameInfo>(){
+			public LeaseNameInfo mapRow(ResultSet rs, int rowNum)
+			throws SQLException {
+				LeaseNameInfo ls = new LeaseNameInfo(rs.getString(1), rs.getString(2), rs.getInt(3),	rs.getInt(4), rs.getDouble(5), rs.getString(6));
+				return ls;
+		}
+	 });
+
+	 // Final query result
+	 List<LeaseNameInfo> lateInvoices = new ArrayList<LeaseNameInfo>();
+
+	 // Find all invoices that are late
+	 for (i = 0; i < unpaidInvoices.size(); i++) {
+
+		 // Determine if it's late
+		 if (unpaidInvoices.get(i).isLate()) {
+			 totalDebt += unpaidInvoices.get(i).rate;
+			 lateInvoices.add(unpaidInvoices.get(i));
+		 }
+	 }
+
+	 // Change the DOM
+	 model.addAttribute("invoices", lateInvoices);
+	 model.addAttribute("totalDebt", totalDebt);
+
+	 return "unpaidInvoices";
+}
+
+//Query 4 (Custom Query 1): Of all of the students who live on-campus (in a Residence Hall),
+//print the students full name as well as their advisors full name and email address.
+
+@GetMapping("/advisors")
+public String advisors(Model model){
+
+   //STEP 1: STEP UP QUERY AND VARIABLES
+   String sql =   "SELECT s.first_name, s.last_name, a.first_name, a.last_name, a.email FROM Student s, Advisor a WHERE s.advisor_id = a.advisor_id AND EXISTS(SELECT l.lease_id FROM Lease l, ResHall h WHERE l.student_id = s.student_id AND l.res_apt_id = h.hall_id)";
+
+   //STEP 2: EXCECUTE QUERY AND STORE RESULTS
+   List<StudentAdvisor> advisorList = jdbcTemplate.query(sql, new RowMapper<StudentAdvisor>(){
+   public StudentAdvisor mapRow(ResultSet rs, int rowNum) 
+   throws SQLException {
+      StudentAdvisor ls = new StudentAdvisor(rs.getString(1), 
+                                             rs.getString(2),
+                                             rs.getString(3),
+                                             rs.getString(4),
+                                             rs.getString(5));
+         return ls;
+      }
+   });
+   model.addAttribute("advisors", advisorList);
+
+   return "advisors";
+}
 
     @GetMapping("/dStudent")
     public String deleteStudent( @RequestParam(name="sid", required=true) String sid)
