@@ -187,7 +187,7 @@ public class MainController {
 				}
 
 				// Create the resulting list
-				List<LeaseCount> summaries = new ArrayList<LeaseSummary>();
+				List<LeaseCount> summaries = new ArrayList<LeaseCount>();
 				summaries.add(new LeaseCount("First Year", fyRHCount, fyFACount));
 				summaries.add(new LeaseCount("Undergraduate", ugRHCount, ugFACount));
 				summaries.add(new LeaseCount("Postgraduate", pgRHCount, pgFACount));
