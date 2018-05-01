@@ -1,0 +1,16 @@
+Staff
+Staff_IdFirst_NameLast_NameDOBGenderJobTitleLocation 
+ 
+ResHall
+Hall_IdNameAddressPhone 
+Room
+ResAptIdRoomNoRate 
+Lease
+LeaseNoF_NameL_NameRateStartDateDuration 
+Student
+IdFirst_NameLast_NameAddressPhoneEmailGenderDOBCategoryMajorMinor 
+Invoice
+InvoiceNoLeaseNoSemesterDueDatePaidDate 
+Inspection
+InspectionIdResAptNoRoomNoStaff_IdDateConditionActionTaken 
+
