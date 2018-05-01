@@ -208,7 +208,7 @@ public class MainController {
 //runs the query and then checks if the unpaid invoices
 //were outstanding before adding it to the result list
 
-@GetMapping("/invoices")
+@GetMapping("/unpaidInvoices")
 public String invoices(Model model){
 
 	 //STEP 1: STEP UP QUERY AND VARIABLES
