@@ -1,0 +1,19 @@
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title>Proj4: Hall Stats</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    </head>
+    <body>
+        <table>
+            <tr>
+              <td>Number of Students</td>
+              <td>Avg. Rent Rate</td>
+            </tr>
+            <tr th:each="hall : ${reshalls}">
+                <td th:text="${hall.count}"/>
+				        <td th:text="${hall.avg}"/>
+            </tr>
+        </table>
+    </body>
+</html>
