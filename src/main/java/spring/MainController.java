@@ -28,7 +28,13 @@ public class MainController {
         jdbcTemplate = new JdbcTemplate(dataSource);
     }
 
-    @GetMapping("/managers")
+		// Responds to request made to the
+		// controller for answering query
+		// 1: What are the manager names and
+		// telephone numbers of each Residence Hall?
+		// Collects the query results into a list of
+		// strings that represent each row
+     @GetMapping("/managers")
     public String managers(@RequestParam(name="name", required=false, defaultValue="World") String sampleText, Model model){
 		String sql = "Select first_name,last_name, phone from staff join resHall on staff.Location = ResHall.hall_id";
 		List<Manager> rows = jdbcTemplate.query(sql, new RowMapper<Manager>(){
@@ -38,11 +44,7 @@ public class MainController {
 						manager.firstname = rs.getString(1);
 						manager.lastname = rs.getString(2);
 						manager.phone = rs.getString(3);
-						
-						//fname = String.format("%-20s", fname);
-						//lname = String.format("%-20s", lname);
-						//System.out.println(fname + "D");
-					    return manager;
+						return manager;
                         }
                     });
 		model.addAttribute("managers", rows);
