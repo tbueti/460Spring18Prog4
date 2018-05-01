@@ -6,9 +6,15 @@
     </head>
     <body>
         <table>
+            <tr>
+              <td>Category</td>
+              <td>Residence Hall</td>
+              <td>Furnished Apartment</td>
+            </tr>
             <tr th:each="lease : ${leases}">
-                <td th:text="${lease}"</td>
-				
+                <td th:text="${lease.category}"></td>
+				        <td th:text="${lease.resHall}"></td>
+                <td th:text="${lease.furnApt}"></td>
             </tr>
         </table>
     </body>

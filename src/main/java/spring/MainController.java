@@ -38,7 +38,7 @@ public class MainController {
     public String managers(@RequestParam(name="name", required=false, defaultValue="World") String sampleText, Model model){
 		String sql = "Select first_name,last_name, phone from staff join resHall on staff.Location = ResHall.hall_id";
 		List<Manager> rows = jdbcTemplate.query(sql, new RowMapper<Manager>(){
-                    public Manager mapRow(ResultSet rs, int rowNum) 
+                    public Manager mapRow(ResultSet rs, int rowNum)
                                                     throws SQLException {
 						Manager manager = new Manager();
 						manager.firstname = rs.getString(1);
@@ -48,15 +48,151 @@ public class MainController {
                         }
                     });
 		model.addAttribute("managers", rows);
-	
+
         return "managers";
     }
 
+		// Responds to request made to the controller
+		// by the client for answering query 2:
+		// What are the numbers of students in each
+		// category currently living in Residence Halls and
+		// Furnished Apartments? Collects the query
+		// results by performing 6 separate queries and
+		// determining which of those students have active leases
+		// and displaying the total number of each to the DOM.
     @GetMapping("/leases")
-    public String managers(Model model){
-        model.addAttribute("sampleText", "wow");//sets up sampleText variable for leases.html
-        model.addAttribute("sampleText", "such wow\nhello");
-        System.out.println("\n\n\ntest\n\n\n");
+    public String leases(Model model){
+
+				// Query strings
+				String fyRH = "Select start_date, duration from lease, ResHall, Room, Student where lease.room_no=room.room_no and lease.res_apt_id=room.res_apt_id and Student.student_id=lease.student_id and Student.category = 'First Year' and lease.res_apt_id in (Select hall_id from ResHall)";
+				String fyFA = "Select start_date, duration from lease, ResHall, Room, Student where lease.room_no=room.room_no and lease.res_apt_id=room.res_apt_id and Student.student_id=lease.student_id and Student.category = 'First Year' and lease.res_apt_id not in (Select hall_id from ResHall)";
+				String ugRH = "Select start_date, duration from lease, ResHall, Room, Student where lease.room_no=room.room_no and lease.res_apt_id=room.res_apt_id and Student.student_id=lease.student_id and Student.category = 'Undergraduate' and lease.res_apt_id in (Select hall_id from ResHall)";
+				String ugFA = "Select start_date, duration from lease, ResHall, Room, Student where lease.room_no=room.room_no and lease.res_apt_id=room.res_apt_id and Student.student_id=lease.student_id and Student.category = 'Undergraduate' and lease.res_apt_id not in (Select hall_id from ResHall)";
+				String pgRH = "Select start_date, duration from lease, ResHall, Room, Student where lease.room_no=room.room_no and lease.res_apt_id=room.res_apt_id and Student.student_id=lease.student_id and Student.category = 'Postgraduate' and lease.res_apt_id in (Select hall_id from ResHall)";
+				String pgFA = "Select start_date, duration from lease, ResHall, Room, Student where lease.room_no=room.room_no and lease.res_apt_id=room.res_apt_id and Student.student_id=lease.student_id and Student.category = 'Postgraduate' and lease.res_apt_id not in (Select hall_id from ResHall)";
+
+				// The counts
+				int fyRHCount = 0;
+				int fyFACount = 0;
+				int ugRHCount = 0;
+				int ugFACount = 0;
+				int pgRHCount = 0;
+				int pgFACount = 0;
+
+				// Vars
+				int i = 0;
+
+				// Run the queries
+				// First Year Students in Residence Halls
+				List<LeaseSummary> fyRHrows = jdbcTemplate.query(fyRH, new RowMapper<Manager>(){
+					public LeaseSummary mapRow(ResultSet rs, int rowNum) throws SQLException {
+						LeaseSummary ls = new LeaseSummary(rs.getString(1), rs.getString(2));
+						return ls;
+		      }
+		    });
+
+				// First Year Students in Furnished Apartments
+				List<LeaseSummary> fyFArows = jdbcTemplate.query(fyFA, new RowMapper<Manager>(){
+					public LeaseSummary mapRow(ResultSet rs, int rowNum) throws SQLException {
+						LeaseSummary ls = new LeaseSummary(rs.getString(1), rs.getString(2));
+						return ls;
+		      }
+		    });
+
+				// Undergraduates in Residence Halls
+				List<LeaseSummary> ugRHrows = jdbcTemplate.query(ugRH, new RowMapper<Manager>(){
+					public LeaseSummary mapRow(ResultSet rs, int rowNum) throws SQLException {
+						LeaseSummary ls = new LeaseSummary(rs.getString(1), rs.getString(2));
+						return ls;
+		      }
+		    });
+
+				// Undergraduates in Furnished Apartments
+				List<LeaseSummary> ugFArows = jdbcTemplate.query(ugFA, new RowMapper<Manager>(){
+					public LeaseSummary mapRow(ResultSet rs, int rowNum) throws SQLException {
+						LeaseSummary ls = new LeaseSummary(rs.getString(1), rs.getString(2));
+						return ls;
+		      }
+		    });
+
+				// Postgraduates in Residence Halls
+				List<LeaseSummary> pgRHrows = jdbcTemplate.query(pgRH, new RowMapper<Manager>(){
+					public LeaseSummary mapRow(ResultSet rs, int rowNum) throws SQLException {
+						LeaseSummary ls = new LeaseSummary(rs.getString(1), rs.getString(2));
+						return ls;
+		      }
+		    });
+
+				// Postgraduates in Furnished Apartments
+				List<LeaseSummary> pgFArows = jdbcTemplate.query(pgFA, new RowMapper<Manager>(){
+					public LeaseSummary mapRow(ResultSet rs, int rowNum) throws SQLException {
+						LeaseSummary ls = new LeaseSummary(rs.getString(1), rs.getString(2));
+						return ls;
+		      }
+		    });
+
+				// Count FYRH Tuples
+				for (i = 0; i < fyRHrows.size(); i++) {
+
+					// If the student is still living there
+					if (fyRHrows.get(i).isActive()) {
+						fyRHCount++;
+					}
+				}
+
+				// Count FYFA Tuples
+				for (i = 0; i < fyFArows.size(); i++) {
+
+					// If the student is still living there
+					if (fyFArows.get(i).isActive()) {
+						fyFACount++;
+					}
+				}
+
+				// Count UGRH Tuples
+				for (i = 0; i < ugRHrows.size(); i++) {
+
+					// If the student is still living there
+					if (ugRHrows.get(i).isActive()) {
+						ugRHCount++;
+					}
+				}
+
+				// Count UGFA Tuples
+				for (i = 0; i < ugFArows.size(); i++) {
+
+					// If the student is still living there
+					if (ugFArows.get(i).isActive()) {
+						ugFACount++;
+					}
+				}
+
+				// Count pgRH Tuples
+				for (i = 0; i < pgRHrows.size(); i++) {
+
+					// If the student is still living there
+					if (pgRHrows.get(i).isActive()) {
+						pgRHCount++;
+					}
+				}
+
+				// Count pgFA Tuples
+				for (i = 0; i < pgFArows.size(); i++) {
+
+					// If the student is still living there
+					if (pgFArows.get(i).isActive()) {
+						pgFACount++;
+					}
+				}
+
+				// Create the resulting list
+				List<LeaseSummary> summaries = new ArrayList<LeaseSummary>();
+				summaries.add(new LeaseSummary("First Year", fyRHCount, fyFACount));
+				summaries.add(new LeaseSummary("Undergraduate", ugRHCount, ugFACount));
+				summaries.add(new LeaseSummary("Postgraduate", pgRHCount, pgFACount));
+
+				// Change the DOM
+        model.addAttribute("lease", summaries);
         return "leases";
     }
 
@@ -93,7 +229,7 @@ public class MainController {
         System.out.println("advisor = " + advisor);
         System.out.println("major = " + major);
         System.out.println("minor = " + minor);
-		
+
 		String sql = "select MAX(student_id) from student";
 		int sid = jdbcTemplate.queryForObject(sql, Integer.class) +1;
 		System.out.println("new sid = " + sid);
