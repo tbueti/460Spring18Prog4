@@ -1,0 +1,42 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Proj4: New Staff</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<t1>
+	First name: <input id="fname" type="text" name="fname">
+	<br>
+	Last name: <input id="lname" type="text" name="lname">
+	<br>
+	Address: <input id="addr" type="text" name="addr">
+	<br>
+	Phone: <input id="phone" type="text" name="phone">
+	<br>
+	Email: <input id="email" type="text" name="email">
+	<br>
+	Gender: <input id="gender" type="text" name="gender">
+	<br>
+	DOB (MM/DD/YYYY): <input id="dob" type="text" name="dob">
+	<br>
+	Major: <input id="major" type="text" name="major">
+	<br>
+	Minor: <input id="minor" type="text" name="minor">
+	<br>
+	<INPUT Type="BUTTON" Value="back" Onclick="window.location.href='index.html'"> <button type="submit" onClick= "newStudent()">submit</button>
+	
+    </t1>
+</form>
+<script type="text/javascript">
+	function newStudent(){
+	
+	}
+	function getGreeting(){
+		var value = document.getElementById('text').value;
+		console.log(value);
+		window.location.href = "/greeting?name=" + value;
+	}
+</script>
+</body>
+</html>
