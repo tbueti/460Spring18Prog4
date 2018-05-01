@@ -219,6 +219,8 @@ public String invoices(Model model){
 	 List<LeaseNameInfo> unpaidInvoices = jdbcTemplate.query(sql, new RowMapper<LeaseNameInfo>(){
 			public LeaseNameInfo mapRow(ResultSet rs, int rowNum)
 			throws SQLException {
+
+				try {
 				 //pull due date from results
 				 SimpleDateFormat dd = new SimpleDateFormat("dd/MM/yyyy");
 				 Date dueDate = dd.parse(rs.getString(6));
@@ -232,7 +234,12 @@ public String invoices(Model model){
 						LeaseNameInfo ls = new LeaseNameInfo(rs.getString(1), rs.getString(2), rs.getInt(3),	rs.getInt(4), rs.getDouble(5), rs.getString(6));
 						return ls;
 				 }
+
+				 return null;
 			}
+		} catch (Exception e) {
+			return null;
+		}
 	 });
 	 model.addAttribute("invoices", unpaidInvoices);
 
