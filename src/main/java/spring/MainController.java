@@ -32,14 +32,14 @@ public class MainController {
     public String managers(@RequestParam(name="name", required=false, defaultValue="World") String sampleText, Model model){
 		String sql = "Select first_name,last_name, phone from staff join resHall on staff.Location = ResHall.hall_id";
 		List<String> rows = jdbcTemplate.query(sql, new RowMapper<String>(){
-                    public String mapRow(ResultSet rs, int rowNum) 
+                    public String mapRow(ResultSet rs, int rowNum)
                                                     throws SQLException {
-						String res = rs.getString(1) + " " + rs.getString(2) + "	" + rs.getString(3);
+						String res = rs.getString(1) + "\t" + rs.getString(2) + "\t" + rs.getString(3);
                         return res;
                         }
                     });
 		model.addAttribute("managers", rows);
-	
+
         return "managers";
     }
 
