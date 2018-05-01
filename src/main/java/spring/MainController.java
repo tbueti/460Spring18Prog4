@@ -197,6 +197,52 @@ public class MainController {
         return "leases";
     }
 
+		//Query 3: List the names of students with outstanding unpaid invoices, identifying information for the Room/Apartment
+//associated with the Invoice (including Residence Hall if necessary), and the amounts due. In addition,
+//calculate the total outstanding debt of all unpaid invoices.
+
+//runs the query and then checks if the unpaid invoices
+//were outstanding before adding it to the result list
+
+@GetMapping("/invoices")
+public String invoices(Model model){
+
+	 //STEP 1: STEP UP QUERY AND VARIABLES
+	 int totalDebt = 0;
+	 String sql =   "SELECT first_name, last_name, res_apt_id, room_no, rate, due_date
+									FROM Lease l, Invoice i
+									WHERE l.lease_id = i.lease_id
+									AND i.paid_date IS NULL";
+
+	 //STEP 2: EXCECUTE QUERY AND STORE RESULTS
+	 List<LeaseNameInfo> unpaidInvoices = jdbcTemplate.query(sql, new RowMapper<LeaseNameInfo>(){
+			public LeaseNameInfo mapRow(ResultSet rs, int rowNum)
+			throws SQLException {
+				 //pull due date from results
+				 SimpleDateFormat dd = new SimpleDateFormat("dd/MM/yyyy");
+				 Date dueDate = dd.parse(rs.getString(6));
+
+				 //set up current date
+				 DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
+				 Date currentDate = new Date();
+
+				 //if due date is before current date, add result to the list
+				 if(dueDate.compareTo(currentDate) < 0){
+						LeaseNameInfo ls = new LeaseNameInfo(rs.getString(1),
+																								rs.getString(2),
+																								rs.getString(3),
+																								rs.getString(4),
+																								rs.getString(5),
+																								rs.getString(6));
+						return ls;
+				 }
+			}
+	 };
+	 model.addAttribute("invoices", unpaidInvoices);
+
+	 return "invoices";
+}
+
     @GetMapping("/dStudent")
     public String deleteStudent( @RequestParam(name="sid", required=true) String sid)
     {
