@@ -24,6 +24,8 @@
 	<br>
   Display Advisors <button type="submit" onclick="getAdvisors()">Show Advisors</button>
   <br>
+  Residence Hall Stats <button type="submit" onclick="getResHallStats()">Show Stats</button> Hall Name: <input type="text" name="input">
+  <br>
     </t1>
 </form>
 <script type="text/javascript">
@@ -38,6 +40,9 @@
   }
   function getAdvisors() {
     window.location.href = "/advisors";
+  }
+  function getResHallStats() {
+    window.location.href = "/reshalls?hallName=" + document.getElementById("input").value;
   }
 </script>
 </body>
