@@ -272,14 +272,18 @@ public String advisors(Model model){
    return "advisors";
 }
 
+    //Record Deletion(Student): deletes a student who matches the given id given by the user from the student table and any leases that are associated with the student
     @GetMapping("/dStudent")
     public String deleteStudent( @RequestParam(name="sid", required=true) String sid)
     {
-        System.out.println("sid = " + sid);
+        int sidInt = Integer.parseInt(sid);
+        jdbcTemplate.update("DELETE FROM lease WHERE student_id = ?",sidInt);
+        jdbcTemplate.update("DELETE FROM student WHERE student_id = ?",sidInt);
         return "complete";
     }
 
 
+    // Record Insertion(Student): Inserts a new student into the student table
     @GetMapping("/student")
     public String student(
                           @RequestParam(name="fname", required=true) String fname,
@@ -294,19 +298,8 @@ public String advisors(Model model){
                           @RequestParam(name="major", required=true) String major,
                           @RequestParam(name="minor", required=false) String minor)
     {
-        System.out.println("fname = " + fname);
-        System.out.println("lname = " + lname);
-        System.out.println("addr = " + addr);
-        System.out.println("phone = " + phone);
-        System.out.println("email = " + email);
-        System.out.println("gender = " + gender);
-        System.out.println("dob = " + dob);
-        System.out.println("cat = " + cat);
-        System.out.println("advisor = " + advisor);
-        System.out.println("major = " + major);
-        System.out.println("minor = " + minor);
-
-		String sql = "select MAX(student_id) from student";
+        
+        String sql = "select MAX(student_id) from student";
 		int sid = jdbcTemplate.queryForObject(sql, Integer.class) +1;
 		System.out.println("new sid = " + sid);
 		jdbcTemplate.update(
@@ -317,6 +310,7 @@ public String advisors(Model model){
     }
 
 
+    //Record Insertion(Staff): inserts a new staff member into the database
     @GetMapping("/staff")
     public String staff(
                           @RequestParam(name="fname", required=true) String fname,
@@ -347,8 +341,9 @@ public String advisors(Model model){
         return "complete";
     }
 
+    //Record Insertion (Lease): inserts a new lease into the database
     @GetMapping("/nlease")
-    public String staff(
+    public String newLease(
                         @RequestParam(name="fname", required=true) String fname,
                         @RequestParam(name="lname", required=true) String lname,
                         @RequestParam(name="sid", required=true) String sid,
@@ -381,14 +376,23 @@ public String advisors(Model model){
         
         return "complete";
     }
-
+    
+    //Record Update(Room): updates the rate in the specified room. Does not change existing leases
     @GetMapping("/uRent")
-    public String staff(
+    public String updateRent(
                         @RequestParam(name="resaptid", required=true) String resaptid,
-                        @RequestParam(name="newRent", required=true) String newRent)
+                        @RequestParam(name="roNum", required=true) String roNum,
+                        @RequestParam(name="nRent", required=true) String nRent)
     {
+        
+        
         System.out.println("resaptid = " + resaptid);
-        System.out.println("newRent = " + newRent);
+        System.out.println("room_no = " + roNum);
+        System.out.println("newRent = " + nRent);
+        jdbcTemplate.update(
+                            "update room set rate=? where res_apt_id=? AND room_no=?",
+                             nRent,resaptid,roNum
+                            );
         return "complete";
     }
 
