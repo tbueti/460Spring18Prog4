@@ -65,12 +65,12 @@ public class MainController {
     public String leases(Model model){
 
 				// Query strings
-				String fyRH = "Select start_date, duration from lease, ResHall, Room, Student where lease.room_no=room.room_no and lease.res_apt_id=room.res_apt_id and Student.student_id=lease.student_id and Student.category = 'First Year' and lease.res_apt_id in (Select hall_id from ResHall)";
-				String fyFA = "Select start_date, duration from lease, ResHall, Room, Student where lease.room_no=room.room_no and lease.res_apt_id=room.res_apt_id and Student.student_id=lease.student_id and Student.category = 'First Year' and lease.res_apt_id not in (Select hall_id from ResHall)";
-				String ugRH = "Select start_date, duration from lease, ResHall, Room, Student where lease.room_no=room.room_no and lease.res_apt_id=room.res_apt_id and Student.student_id=lease.student_id and Student.category = 'Undergraduate' and lease.res_apt_id in (Select hall_id from ResHall)";
-				String ugFA = "Select start_date, duration from lease, ResHall, Room, Student where lease.room_no=room.room_no and lease.res_apt_id=room.res_apt_id and Student.student_id=lease.student_id and Student.category = 'Undergraduate' and lease.res_apt_id not in (Select hall_id from ResHall)";
-				String pgRH = "Select start_date, duration from lease, ResHall, Room, Student where lease.room_no=room.room_no and lease.res_apt_id=room.res_apt_id and Student.student_id=lease.student_id and Student.category = 'Postgraduate' and lease.res_apt_id in (Select hall_id from ResHall)";
-				String pgFA = "Select start_date, duration from lease, ResHall, Room, Student where lease.room_no=room.room_no and lease.res_apt_id=room.res_apt_id and Student.student_id=lease.student_id and Student.category = 'Postgraduate' and lease.res_apt_id not in (Select hall_id from ResHall)";
+				String fyRH = "Select start_date, duartion from lease, ResHall, Room, Student where lease.room_no=room.room_no and lease.res_apt_id=room.res_apt_id and Student.student_id=lease.student_id and Student.category = 'First Year' and lease.res_apt_id in (Select hall_id from ResHall)";
+				String fyFA = "Select start_date, duartion from lease, ResHall, Room, Student where lease.room_no=room.room_no and lease.res_apt_id=room.res_apt_id and Student.student_id=lease.student_id and Student.category = 'First Year' and lease.res_apt_id not in (Select hall_id from ResHall)";
+				String ugRH = "Select start_date, duartion from lease, ResHall, Room, Student where lease.room_no=room.room_no and lease.res_apt_id=room.res_apt_id and Student.student_id=lease.student_id and Student.category = 'Undergraduate' and lease.res_apt_id in (Select hall_id from ResHall)";
+				String ugFA = "Select start_date, duartion from lease, ResHall, Room, Student where lease.room_no=room.room_no and lease.res_apt_id=room.res_apt_id and Student.student_id=lease.student_id and Student.category = 'Undergraduate' and lease.res_apt_id not in (Select hall_id from ResHall)";
+				String pgRH = "Select start_date, duartion from lease, ResHall, Room, Student where lease.room_no=room.room_no and lease.res_apt_id=room.res_apt_id and Student.student_id=lease.student_id and Student.category = 'Postgraduate' and lease.res_apt_id in (Select hall_id from ResHall)";
+				String pgFA = "Select start_date, duartion from lease, ResHall, Room, Student where lease.room_no=room.room_no and lease.res_apt_id=room.res_apt_id and Student.student_id=lease.student_id and Student.category = 'Postgraduate' and lease.res_apt_id not in (Select hall_id from ResHall)";
 
 				// The counts
 				int fyRHCount = 0;
