@@ -31,11 +31,18 @@ public class MainController {
     @GetMapping("/managers")
     public String managers(@RequestParam(name="name", required=false, defaultValue="World") String sampleText, Model model){
 		String sql = "Select first_name,last_name, phone from staff join resHall on staff.Location = ResHall.hall_id";
-		List<String> rows = jdbcTemplate.query(sql, new RowMapper<String>(){
-                    public String mapRow(ResultSet rs, int rowNum) 
+		List<Manager> rows = jdbcTemplate.query(sql, new RowMapper<Manager>(){
+                    public Manager mapRow(ResultSet rs, int rowNum) 
                                                     throws SQLException {
-						String res = rs.getString(1) + " " + rs.getString(2) + "	" + rs.getString(3);
-                        return res;
+						Manager manager = new Manager();
+						manager.firstname = rs.getString(1);
+						manager.lastname = rs.getString(2);
+						manager.phone = rs.getString(3);
+						
+						//fname = String.format("%-20s", fname);
+						//lname = String.format("%-20s", lname);
+						//System.out.println(fname + "D");
+					    return manager;
                         }
                     });
 		model.addAttribute("managers", rows);

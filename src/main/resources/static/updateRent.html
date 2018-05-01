@@ -1,0 +1,26 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+    <title>Proj4: Update Rent</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<t1>
+	ResApt ID: <input id="id" type="text" name="id">
+	<br>
+	New Rent: <input id="newRent" type="text" name="newRent">
+	<br>
+	<INPUT Type="BUTTON" Value="back" Onclick="window.location.href='index.html'"> <button type="submit" onClick= "updateRent()">submit</button>
+	
+    </t1>
+</form>
+<script type="text/javascript">
+	function updateRent(){
+        var id = document.getElementById('id').value;
+        var newRent = document.getElementById('newRent').value;
+        window.location.href = "/uRent?resaptid=" + id
+        + "&newRent="+newRent;
+	}
+</script>
+</body>
+</html>
