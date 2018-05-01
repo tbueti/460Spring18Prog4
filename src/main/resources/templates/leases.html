@@ -12,9 +12,9 @@
               <td>Furnished Apartment</td>
             </tr>
             <tr th:each="lease : ${leases}">
-                <td th:text="${lease.category}"></td>
-				        <td th:text="${lease.resHall}"></td>
-                <td th:text="${lease.furnApt}"></td>
+                <td th:text="${lease.category}"/>
+				        <td th:text="${lease.resHall}"/>
+                <td th:text="${lease.furnApt}"/>
             </tr>
         </table>
     </body>
