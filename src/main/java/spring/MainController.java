@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
 import org.springframework.stereotype.Repository;
 
 import javax.annotation.PostConstruct;
@@ -29,11 +30,16 @@ public class MainController {
 
     @GetMapping("/managers")
     public String managers(@RequestParam(name="name", required=false, defaultValue="World") String sampleText, Model model){
-				String sql = "SELECT First_Name, Last_Name, Phone FROM deriand.Staff, deriand.Hotel";
-				List<ManagerHall> results = jdbcTemplate.query(sql, new RowM)
-        model.addAttribute("sampleText", sampleText);//sets up sampleText variable for managers.html
-        System.out.println("\n\n\ntest\n\n\n");
-        System.out.println(sampleText);
+		String sql = "Select first_name,last_name, phone from staff join resHall on staff.Location = ResHall.hall_id";
+		List<String> rows = jdbcTemplate.query(sql, new RowMapper<String>(){
+                    public String mapRow(ResultSet rs, int rowNum) 
+                                                    throws SQLException {
+						String res = rs.getString(1) + " " + rs.getString(2) + "	" + rs.getString(3);
+                        return res;
+                        }
+                    });
+		model.addAttribute("managers", rows);
+	
         return "managers";
     }
 

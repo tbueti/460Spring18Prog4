@@ -12,9 +12,7 @@
         <td>Phone</td>
       </tr>
       <tr th:each="manager : ${managers}">
-        <td th:"${manager.firstName}"</td>
-        <td th:"${manager.lastName}"</td>
-        <td th:"${manager.phone}"</td>
+         <td th:text="${manager}"</td>
       </tr>
     </table>
   </body>
