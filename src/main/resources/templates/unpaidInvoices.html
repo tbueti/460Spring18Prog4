@@ -1,0 +1,26 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <title>Proj4: Overdue Invoices</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  </head>
+  <body>
+    <table>
+      <tr>
+        <td>First Name</td>
+        <td>Last Name</td>
+        <td>Apt/Hall Number</td>
+        <td>Room Number</td>
+        <td>Amount</td>
+      </tr>
+      <tr th:each="invoice : ${invoices}">
+         <td th:text="${invoice.firstName}"</td>
+		     <td th:text="${invoice.lastName}"</td>
+		     <td th:text="${invoice.hallId}"</td>
+		     <td th:text="${invoice.roomNo}"</td>
+         <td th:text="${invoice.rate}"</td>
+      </tr>
+	  </tr>
+    </table>
+  </body>
+</html>
