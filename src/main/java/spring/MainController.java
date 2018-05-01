@@ -253,7 +253,7 @@ public String invoices(Model model){
 public String advisors(Model model){
 
    //STEP 1: STEP UP QUERY AND VARIABLES
-   String sql =   "SELECT s.first_name, s.last_name, a.first_name, a.last_name, a.email FROM Student s, Advisor, Lease a WHERE s.advisor_id = a.advisor_id and Lease.student_id = s.student_id and Lease.res_apt_id in (select res_apt_id from ResHall)";
+   String sql =   "SELECT s.first_name, s.last_name, a.first_name, a.last_name, a.email FROM Student s, Advisor a, Lease WHERE s.advisor_id = a.advisor_id and Lease.student_id = s.student_id and Lease.res_apt_id in (select res_apt_id from ResHall)";
 
    //STEP 2: EXCECUTE QUERY AND STORE RESULTS
    List<StudentAdvisor> advisorList = jdbcTemplate.query(sql, new RowMapper<StudentAdvisor>(){
