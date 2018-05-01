@@ -257,6 +257,18 @@ public class MainController {
         System.out.println("dob = " + dob);
         System.out.println("title = " + title);
         System.out.println("location = " + location);
+        
+        
+        String sql = "select MAX(staff_id) from staff";
+        int sid = jdbcTemplate.queryForObject(sql, Integer.class) +1;
+        int loc = Integer.parseInt(location);
+        System.out.println("new sid = " + sid);
+        jdbcTemplate.update(
+                            "INSERT INTO Staff (staff_id, first_name, last_name, gender, dob, job_title, location) VALUES (?, ?,?,?,?,?,?)",
+                            sid,fname,lname,gender,dob, title, location
+                            );
+
+        
         return "complete";
     }
 
@@ -266,13 +278,32 @@ public class MainController {
                         @RequestParam(name="lname", required=true) String lname,
                         @RequestParam(name="sid", required=true) String sid,
                         @RequestParam(name="rid", required=true) String rid,
-                        @RequestParam(name="rate", required=true) String rate)
+                        @RequestParam(name="rapid", required=true) String rapid,
+                        @RequestParam(name="rate", required=true) String rate,
+                        @RequestParam(name="sDate", required=true) String sDate,
+                        @RequestParam(name="duration", required=true) String duration)
     {
         System.out.println("fname = " + fname);
         System.out.println("lname = " + lname);
         System.out.println("sid = " + sid);
         System.out.println("rid = " + rid);
         System.out.println("rate = " + rate);
+        
+        String sql = "select MAX(lease_id) from lease";
+        int lid = jdbcTemplate.queryForObject(sql, Integer.class) +1;
+        int sidInt = Integer.parseInt(sid);
+        int ridInt = Integer.parseInt(rid);
+        int rapidInt = Integer.parseInt(rapid);
+        int durationInt = Integer.parseInt(duration);
+
+        System.out.println("new sid = " + sid);
+        jdbcTemplate.update(
+                            "INSERT INTO Lease(lease_id, res_apt_id, room_no, student_id, rate, start_date, duartion, first_name, last_name) VALUES (?,?,?,?,?,?,?,?,?)",
+                            lid,rapidInt,ridInt,sidInt,rate, sDate,durationInt,fname,lname
+                            );
+        
+        
+        
         return "complete";
     }
 
