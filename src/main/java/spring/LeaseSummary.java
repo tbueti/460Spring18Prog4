@@ -29,7 +29,7 @@ public class LeaseSummary {
 
 		try {
 
-			SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
+			SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 			this.startDate = sdf.parse(sd);
 			this.duration = Integer.parseInt(dur);
 		} catch (Exception e) {
@@ -44,11 +44,8 @@ public class LeaseSummary {
 	// duration and today's date.
 	public boolean isActive() {
 
-		try {SimpleDateFormat sdf = new SimpleDateFormat("MM/dd/yyyy");
-
 		// Get the current date
 		Date today = new Date();
-		Date formated = sdf.parse(sdf.format(today));
 
 		// Get a Calendar instance
 		Calendar cal = Calendar.getInstance();
@@ -61,16 +58,14 @@ public class LeaseSummary {
 		Date leaseEnd = cal.getTime();
 
 		// If we are within the lease
-		if (formated.compareTo(leaseEnd) < 0) {
+		if (today.compareTo(leaseEnd) < 0) {
 
 			return true;
 		}
 
 		// The lease is up
 		return false;
-	} catch (Exception e) {
-		return false;
-	}
+
 	}
 
 
