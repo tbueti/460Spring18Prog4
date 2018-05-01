@@ -229,7 +229,7 @@ public String invoices(Model model){
 						return ls;
 				 }
 			}
-	 };
+	 });
 	 model.addAttribute("invoices", unpaidInvoices);
 
 	 return "invoices";

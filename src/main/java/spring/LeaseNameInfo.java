@@ -26,7 +26,7 @@ public class LeaseNameInfo {
 
    // Constructor
    //first_name, last_name, res_apt_id, room_no, rate, due_date
-   public LeaseSummary(String fn, String ln, int hid, int rno, int r, int dd) {
+   public LeaseNameInfo(String fn, String ln, int hid, int rno, int r, int dd) {
 
       try {
          this.firstName = fn;
