@@ -242,7 +242,7 @@ public String invoices(Model model){
 	 model.addAttribute("invoices", lateInvoices);
 	 model.addAttribute("totalDebt", totalDebt);
 
-	 return "invoices";
+	 return "unpaidInvoices";
 }
 
     @GetMapping("/dStudent")
