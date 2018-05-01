@@ -209,10 +209,7 @@ public String invoices(Model model){
 
 	 //STEP 1: STEP UP QUERY AND VARIABLES
 	 int totalDebt = 0;
-	 String sql =   "SELECT first_name, last_name, res_apt_id, room_no, rate, due_date
-									FROM Lease l, Invoice i
-									WHERE l.lease_id = i.lease_id
-									AND i.paid_date IS NULL";
+	 String sql =   "SELECT first_name, last_name, res_apt_id, room_no, rate, due_date FROM Lease l, Invoice i WHERE l.lease_id = i.lease_id AND i.paid_date IS NULL";
 
 	 //STEP 2: EXCECUTE QUERY AND STORE RESULTS
 	 List<LeaseNameInfo> unpaidInvoices = jdbcTemplate.query(sql, new RowMapper<LeaseNameInfo>(){
@@ -228,12 +225,7 @@ public String invoices(Model model){
 
 				 //if due date is before current date, add result to the list
 				 if(dueDate.compareTo(currentDate) < 0){
-						LeaseNameInfo ls = new LeaseNameInfo(rs.getString(1),
-																								rs.getString(2),
-																								rs.getString(3),
-																								rs.getString(4),
-																								rs.getString(5),
-																								rs.getString(6));
+						LeaseNameInfo ls = new LeaseNameInfo(rs.getString(1), rs.getString(2), rs.getString(3),	rs.getString(4), rs.getString(5), rs.getString(6));
 						return ls;
 				 }
 			}
