@@ -16,6 +16,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.Calendar;
+import java.text.SimpleDateFormat;
 
 @Controller
 public class MainController {
@@ -225,7 +228,7 @@ public String invoices(Model model){
 
 				 //if due date is before current date, add result to the list
 				 if(dueDate.compareTo(currentDate) < 0){
-						LeaseNameInfo ls = new LeaseNameInfo(rs.getString(1), rs.getString(2), rs.getString(3),	rs.getString(4), rs.getString(5), rs.getString(6));
+						LeaseNameInfo ls = new LeaseNameInfo(rs.getString(1), rs.getString(2), rs.getInt(3),	rs.getInt(4), rs.getInt(5), rs.getInt(6));
 						return ls;
 				 }
 			}
