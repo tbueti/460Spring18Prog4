@@ -7,7 +7,9 @@
   <body>
     <table>
       <tr>
-        <td>First Name Last Name Phone</td>
+        <td>First Name</td>
+        <td>Last Name</td>
+        <td>Phone</td>
       </tr>
       <tr th:each="manager : ${managers}">
          <td th:text="${manager.firstname}"</td>
