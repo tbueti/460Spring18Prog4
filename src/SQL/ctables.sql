@@ -24,7 +24,7 @@ CREATE TABLE Advisor (
 	dob varchar2(10) not null,
 	gender varchar2(1) not null,
 	job_title varchar2(20) not null,
-	location varchar2(30) not null
+	location numeric(10) not null
  );
  
  CREATE TABLE Student (	
@@ -44,6 +44,8 @@ CREATE TABLE Advisor (
  
  CREATE TABLE Lease(
 	lease_id numeric(10) PRIMARY KEY not null,
+	res_apt_id numeric(10) references ResHall(hall_id) not null,
+	room_no numeric(5) references Room(room_no) not null,
 	student_id numeric(10) references Student(student_id) not null,
 	rate numeric(10) not null,
 	start_date varchar2(10) not null,
