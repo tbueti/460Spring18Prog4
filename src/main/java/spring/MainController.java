@@ -253,13 +253,13 @@ public String invoices(Model model){
 public String advisors(Model model){
 
    //STEP 1: STEP UP QUERY AND VARIABLES
-   String sql =   "SELECT s.first_name, s.last_name, a.first_name, a.last_name, a.email FROM Student s, Advisor a WHERE s.advisor_id = a.advisor_id AND EXISTS(SELECT l.lease_id FROM Lease l, ResHall h WHERE l.student_id = s.student_id AND l.res_apt_id = h.hall_id)";
+   String sql =   "SELECT Student.first_name, Student.last_name, Advisor.first_name, Advisor.last_name, Advisor.email FROM Student, Advisor WHERE Student.advisor_id = Advisor.advisor_id AND EXISTS(SELECT l.lease_id FROM Lease l, ResHall h WHERE l.student_id = s.student_id AND l.res_apt_id = h.hall_id)";
 
    //STEP 2: EXCECUTE QUERY AND STORE RESULTS
    List<StudentAdvisor> advisorList = jdbcTemplate.query(sql, new RowMapper<StudentAdvisor>(){
-   public StudentAdvisor mapRow(ResultSet rs, int rowNum) 
+   public StudentAdvisor mapRow(ResultSet rs, int rowNum)
    throws SQLException {
-      StudentAdvisor ls = new StudentAdvisor(rs.getString(1), 
+      StudentAdvisor ls = new StudentAdvisor(rs.getString(1),
                                              rs.getString(2),
                                              rs.getString(3),
                                              rs.getString(4),
@@ -272,7 +272,34 @@ public String advisors(Model model){
    return "advisors";
 }
 
+
+  
+//Query 5(Custom Query 2): Given the name of a ResHall, display the number of students who
+//reside there and the average price of rent at that ResHall.
+
+@GetMapping("/reshalls")
+public String reshalls(Model model){
+   String input = 'Mohave';
+
+   //STEP 1: STEP UP QUERY AND VARIABLES
+   String sql = "SELECT count(student_id), avg(rate) FROM Lease l, ResHall h WHERE l.res_apt_id = h.hall_id AND h.name = '" + input + "'";
+
+   //STEP 2: EXCECUTE QUERY AND STORE RESULTS
+   List<CountAvg> calculations = jdbcTemplate.query(sql, new RowMapper<CountAvg>(){
+      public CountAvg mapRow(ResultSet rs, int rowNum) 
+      throws SQLException {
+            CountAvg ls = new CountAvg(rs.getString(1), 
+                                       rs.getString(2));
+            return ls;
+      }
+   });
+   model.addAttribute("reshalls", calculations);
+
+   return "reshalls";
+}
+   
     //Record Deletion(Student): deletes a student who matches the given id given by the user from the student table and any leases that are associated with the student
+
     @GetMapping("/dStudent")
     public String deleteStudent( @RequestParam(name="sid", required=true) String sid)
     {
@@ -326,8 +353,8 @@ public String advisors(Model model){
         System.out.println("dob = " + dob);
         System.out.println("title = " + title);
         System.out.println("location = " + location);
-        
-        
+
+
         String sql = "select MAX(staff_id) from staff";
         int sid = jdbcTemplate.queryForObject(sql, Integer.class) +1;
         int loc = Integer.parseInt(location);
@@ -337,7 +364,7 @@ public String advisors(Model model){
                             sid,fname,lname,gender,dob, title, location
                             );
 
-        
+
         return "complete";
     }
 
@@ -358,7 +385,7 @@ public String advisors(Model model){
         System.out.println("sid = " + sid);
         System.out.println("rid = " + rid);
         System.out.println("rate = " + rate);
-        
+
         String sql = "select MAX(lease_id) from lease";
         int lid = jdbcTemplate.queryForObject(sql, Integer.class) +1;
         int sidInt = Integer.parseInt(sid);
@@ -371,9 +398,9 @@ public String advisors(Model model){
                             "INSERT INTO Lease(lease_id, res_apt_id, room_no, student_id, rate, start_date, duartion, first_name, last_name) VALUES (?,?,?,?,?,?,?,?,?)",
                             lid,rapidInt,ridInt,sidInt,rate, sDate,durationInt,fname,lname
                             );
-        
-        
-        
+
+
+
         return "complete";
     }
     

@@ -16,7 +16,7 @@
 	<br>
 	Job Title: <input id="title" type="text" name="title">
 	<br>
-	Location: <input id="location" type="text" name="location">
+	Location: <input id="loc" type="text" name="loc">
 	<br>
 	<INPUT Type="BUTTON" Value="back" Onclick="window.location.href='index.html'"> <button type="submit" onClick= "newStaff()">submit</button>
 	
@@ -29,13 +29,13 @@
         var gender = document.getElementById('gender').value;
         var dob = document.getElementById('dob').value;
         var title = document.getElementById('title').value;
-        var locaiton = document.getElementById('location').value;
+        var loc = document.getElementById('loc').value;
         window.location.href = "/staff?fname=" + fname
         + "&lname="+lname
         + "&gender="+gender
         + "&dob="+dob
         + "&title="+title
-        + "&location="+location;
+        + "&location="+loc;
 	}
 </script>
 </body>

@@ -1,0 +1,25 @@
+<!DOCTYPE HTML>
+<html>
+  <head>
+    <title>Proj4: Student Advisors</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+  </head>
+  <body>
+    <table>
+      <tr>
+        <td>Student First Name</td>
+        <td>Student Last Name</td>
+        <td>Advisor First Name</td>
+        <td>Advisor Last Name</td>
+        <td>Email</td>
+      </tr>
+      <tr th:each="advisor : ${advisors}">
+         <td th:text="${advisor.sfirstName}"/>
+		     <td th:text="${advisor.slastName}"/>
+         <td th:text="${advisor.afirstName}"/>
+         <td th:text="${advisor.alastName}"/>
+         <td th:text="${advisor.aEmail}"/>
+      </tr>
+    </table>
+  </body>
+</html>

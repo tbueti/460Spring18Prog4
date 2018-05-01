@@ -22,6 +22,8 @@
 	<br>
 	Delete Student (Student ID)<input id="sid" type="text" name="sid"><button type="submit" onClick="deleteStudent()">Delete</button>
 	<br>
+  Display Advisors <button type="submit" onclick="getAdvisors()">Show Advisors</button>
+  <br>
     </t1>
 </form>
 <script type="text/javascript">
@@ -37,6 +39,9 @@
     }
   function getInvoices() {
     window.location.href = "/unpaidInvoices";
+  }
+  function getAdvisors() {
+    window.location.href = "/advisors";
   }
 </script>
 </body>
