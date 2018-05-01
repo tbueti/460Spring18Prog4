@@ -212,36 +212,35 @@ public class MainController {
 public String invoices(Model model){
 
 	 //STEP 1: STEP UP QUERY AND VARIABLES
-	 int totalDebt = 0;
+	 double totalDebt = 0;
+	 int i = 0;
 	 String sql =   "SELECT first_name, last_name, res_apt_id, room_no, rate, due_date FROM Lease l, Invoice i WHERE l.lease_id = i.lease_id AND i.paid_date IS NULL";
 
 	 //STEP 2: EXCECUTE QUERY AND STORE RESULTS
 	 List<LeaseNameInfo> unpaidInvoices = jdbcTemplate.query(sql, new RowMapper<LeaseNameInfo>(){
 			public LeaseNameInfo mapRow(ResultSet rs, int rowNum)
 			throws SQLException {
-
-				try {
-				 //pull due date from results
-				 SimpleDateFormat dd = new SimpleDateFormat("dd/MM/yyyy");
-				 Date dueDate = dd.parse(rs.getString(6));
-
-				 //set up current date
-				 DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-				 Date currentDate = new Date();
-
-				 //if due date is before current date, add result to the list
-				 if(dueDate.compareTo(currentDate) < 0){
-						LeaseNameInfo ls = new LeaseNameInfo(rs.getString(1), rs.getString(2), rs.getInt(3),	rs.getInt(4), rs.getDouble(5), rs.getString(6));
-						return ls;
-				 }
-
-				 return null;
-			} catch (Exception e) {
-				return null;
-			}
+				LeaseNameInfo ls = new LeaseNameInfo(rs.getString(1), rs.getString(2), rs.getInt(3),	rs.getInt(4), rs.getDouble(5), rs.getString(6));
+				return ls;
 		}
 	 });
-	 model.addAttribute("invoices", unpaidInvoices);
+
+	 // Final query result
+	 List<LeaseNameInfo> lateInvoices = new ArrayList<LeaseNameInfo>();
+
+	 // Find all invoices that are late
+	 for (i = 0; i < unpaidInvoices.size(); i++) {
+
+		 // Determine if it's late
+		 if (unpaidInvoices.get(i).isLate()) {
+			 totalDebt += unpaidInvoices.get(i).rate;
+			 lateInvoices.add(unpaidInvoices.get(i));
+		 }
+	 }
+
+	 // Change the DOM
+	 model.addAttribute("invoices", lateInvoices);
+	 model.addAttribute("totalDebt", totalDebt);
 
 	 return "invoices";
 }

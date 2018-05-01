@@ -40,4 +40,52 @@ public class LeaseNameInfo {
 
       }
    }
+
+   // Returns true if the due date is
+   // earlier than today's date and false
+   // if otherwise.
+   public boolean isLate() {
+
+     // Get the current date
+     Date today = new Date();
+
+     // Compare today's date to the due date
+     if (dueDate.compareTo(today) < 0) {
+
+       return true;
+     }
+
+     return false;
+   }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
