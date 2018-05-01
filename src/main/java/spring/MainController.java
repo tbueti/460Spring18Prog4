@@ -278,8 +278,8 @@ public String advisors(Model model){
 //reside there and the average price of rent at that ResHall.
 
 @GetMapping("/reshalls")
-public String reshalls(Model model){
-   String input = "Mohave";
+public String reshalls(@RequestParam(name="hallName", required=true) String hallName, Model model){
+   String input = hallName;
 
    //STEP 1: STEP UP QUERY AND VARIABLES
    String sql = "SELECT count(student_id), avg(rate) FROM Lease l, ResHall h WHERE l.res_apt_id = h.hall_id AND h.name = '" + input + "'";
