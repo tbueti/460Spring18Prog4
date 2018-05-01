@@ -21,12 +21,12 @@ public class LeaseNameInfo {
    public String lastName;
    public int hallId;
    public int roomNo;
-   public int rate;
+   public double rate;
    public Date dueDate;
 
    // Constructor
    //first_name, last_name, res_apt_id, room_no, rate, due_date
-   public LeaseNameInfo(String fn, String ln, int hid, int rno, int r, int dd) {
+   public LeaseNameInfo(String fn, String ln, int hid, int rno, double r, String dd) {
 
       try {
          this.firstName = fn;
@@ -34,8 +34,8 @@ public class LeaseNameInfo {
          this.hallId = hid;
          this.roomNo = rno;
          this.rate = r;
-         SimpleDateFormat dd = new SimpleDateFormat("dd/MM/yyyy");
-         this.dueDate = dd.parse(sd);
+         SimpleDateFormat df = new SimpleDateFormat("dd/MM/yyyy");
+         this.dueDate = df.parse(dd);
       } catch (Exception e) {
 
       }

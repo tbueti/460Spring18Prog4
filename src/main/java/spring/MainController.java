@@ -228,7 +228,7 @@ public String invoices(Model model){
 
 				 //if due date is before current date, add result to the list
 				 if(dueDate.compareTo(currentDate) < 0){
-						LeaseNameInfo ls = new LeaseNameInfo(rs.getString(1), rs.getString(2), rs.getInt(3),	rs.getInt(4), rs.getInt(5), rs.getInt(6));
+						LeaseNameInfo ls = new LeaseNameInfo(rs.getString(1), rs.getString(2), rs.getInt(3),	rs.getInt(4), rs.getDouble(5), rs.getString(6));
 						return ls;
 				 }
 			}
