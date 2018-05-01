@@ -84,7 +84,7 @@ public class MainController {
 
 				// Run the queries
 				// First Year Students in Residence Halls
-				List<LeaseSummary> fyRHrows = jdbcTemplate.query(fyRH, new RowMapper<Manager>(){
+				List<LeaseSummary> fyRHrows = jdbcTemplate.query(fyRH, new RowMapper<LeaseSummary>(){
 					public LeaseSummary mapRow(ResultSet rs, int rowNum) throws SQLException {
 						LeaseSummary ls = new LeaseSummary(rs.getString(1), rs.getString(2));
 						return ls;
@@ -92,7 +92,7 @@ public class MainController {
 		    });
 
 				// First Year Students in Furnished Apartments
-				List<LeaseSummary> fyFArows = jdbcTemplate.query(fyFA, new RowMapper<Manager>(){
+				List<LeaseSummary> fyFArows = jdbcTemplate.query(fyFA, new RowMapper<LeaseSummary>(){
 					public LeaseSummary mapRow(ResultSet rs, int rowNum) throws SQLException {
 						LeaseSummary ls = new LeaseSummary(rs.getString(1), rs.getString(2));
 						return ls;
@@ -100,7 +100,7 @@ public class MainController {
 		    });
 
 				// Undergraduates in Residence Halls
-				List<LeaseSummary> ugRHrows = jdbcTemplate.query(ugRH, new RowMapper<Manager>(){
+				List<LeaseSummary> ugRHrows = jdbcTemplate.query(ugRH, new RowMapper<LeaseSummary>(){
 					public LeaseSummary mapRow(ResultSet rs, int rowNum) throws SQLException {
 						LeaseSummary ls = new LeaseSummary(rs.getString(1), rs.getString(2));
 						return ls;
@@ -108,7 +108,7 @@ public class MainController {
 		    });
 
 				// Undergraduates in Furnished Apartments
-				List<LeaseSummary> ugFArows = jdbcTemplate.query(ugFA, new RowMapper<Manager>(){
+				List<LeaseSummary> ugFArows = jdbcTemplate.query(ugFA, new RowMapper<LeaseSummary>(){
 					public LeaseSummary mapRow(ResultSet rs, int rowNum) throws SQLException {
 						LeaseSummary ls = new LeaseSummary(rs.getString(1), rs.getString(2));
 						return ls;
@@ -116,7 +116,7 @@ public class MainController {
 		    });
 
 				// Postgraduates in Residence Halls
-				List<LeaseSummary> pgRHrows = jdbcTemplate.query(pgRH, new RowMapper<Manager>(){
+				List<LeaseSummary> pgRHrows = jdbcTemplate.query(pgRH, new RowMapper<LeaseSummary>(){
 					public LeaseSummary mapRow(ResultSet rs, int rowNum) throws SQLException {
 						LeaseSummary ls = new LeaseSummary(rs.getString(1), rs.getString(2));
 						return ls;
@@ -124,7 +124,7 @@ public class MainController {
 		    });
 
 				// Postgraduates in Furnished Apartments
-				List<LeaseSummary> pgFArows = jdbcTemplate.query(pgFA, new RowMapper<Manager>(){
+				List<LeaseSummary> pgFArows = jdbcTemplate.query(pgFA, new RowMapper<LeaseSummary>(){
 					public LeaseSummary mapRow(ResultSet rs, int rowNum) throws SQLException {
 						LeaseSummary ls = new LeaseSummary(rs.getString(1), rs.getString(2));
 						return ls;
@@ -186,10 +186,10 @@ public class MainController {
 				}
 
 				// Create the resulting list
-				List<LeaseSummary> summaries = new ArrayList<LeaseSummary>();
-				summaries.add(new LeaseSummary("First Year", fyRHCount, fyFACount));
-				summaries.add(new LeaseSummary("Undergraduate", ugRHCount, ugFACount));
-				summaries.add(new LeaseSummary("Postgraduate", pgRHCount, pgFACount));
+				List<LeaseCount> summaries = new ArrayList<LeaseSummary>();
+				summaries.add(new LeaseCount("First Year", fyRHCount, fyFACount));
+				summaries.add(new LeaseCount("Undergraduate", ugRHCount, ugFACount));
+				summaries.add(new LeaseCount("Postgraduate", pgRHCount, pgFACount));
 
 				// Change the DOM
         model.addAttribute("lease", summaries);
