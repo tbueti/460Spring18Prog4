@@ -22,7 +22,7 @@
 	<br>
 	Delete Student <button type="submit">Delete</button>
 	<br>
-  Display Advisors <button type="submit" onclick="window.location.href='advisors.html'">Show Advisors</button>
+  Display Advisors <button type="submit" onclick="getAdvisors()">Show Advisors</button>
   <br>
     </t1>
 </form>
@@ -35,6 +35,9 @@
     }
   function getInvoices() {
     window.location.href = "/unpaidInvoices";
+  }
+  function getAdvisors() {
+    window.location.href = "/advisors";
   }
 </script>
 </body>
