@@ -288,8 +288,8 @@ public String reshalls(Model model){
    List<CountAvg> calculations = jdbcTemplate.query(sql, new RowMapper<CountAvg>(){
       public CountAvg mapRow(ResultSet rs, int rowNum)
       throws SQLException {
-            CountAvg ls = new CountAvg(rs.getString(1),
-                                       rs.getString(2));
+            CountAvg ls = new CountAvg(rs.getDouble(1),
+                                       rs.getDouble(2));
             return ls;
       }
    });
